@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+  <label>Date Visited:</label>
+  <input type="date" id="DateVisited">
+  <span id="DateVisitedError"></span><br><br>
+  <label>Dine In/Take Out:</label>
+  <input type="radio" id="DineIn" value="D">Dine In&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="TakeOut" value = "T">Take Out&nbsp;&nbsp;&nbsp;
+  <span id="DineInTakeOutError"></span><br><br>
+  <label>Food Quality:</label>  
+  <input type="radio" id="FoodQualityExcellent" value="4">Excellent&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="FoodQualityGood" value="3">Good&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="FoodQualityAverage" value="2">Average&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="FoodQualityDissatisfied" value="1">Dissatisfied&nbsp;&nbsp;&nbsp;&nbsp;
+  <span id="FoodQualityError"></span><br><br>
+  <label>Service Quality:</label>
+  <input type="radio" id="ServiceQualityExcellent" value="4">Excellent&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="ServiceQualityGood" value="3">Good&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="ServiceQualityAverage" value="2">Average&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="ServiceQualityDissatisfied" value="1">Dissatisfied&nbsp;&nbsp;&nbsp;&nbsp;
+  <span id="ServiceQualityError"></span><br><br>
+  <label>Order Accuracy:</label>
+  <input type="radio" id="OrderAccuracyExcellent" value="4">Excellent&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="OrderAccuracyGood" value="3">Good&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="OrderAccuracyAverage" value="2">Average&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="OrderAccuracyDissatisfied" value="1">Dissatisfied&nbsp;&nbsp;&nbsp;&nbsp;
+  <span id="OrderAccuracyError"></span><br><br>
+  <label>Speed of Service:</label>
+  <input type="radio" id="SpeedOfServiceExcellent" value="4">Excellent&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="SpeedOfServiceGood" value="3">Good&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="SpeedOfServiceAverage" value="2">Average&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="SpeedOfServiceDissatisfied" value="1">Dissatisfied&nbsp;&nbsp;&nbsp;&nbsp;
+  <span id="SpeedOfServiceError"></span><br><br>
+  <label>Value:</label>
+  <input type="radio" id="ValueExcellent" value="4">Excellent&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="ValueGood" value="3">Good&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="ValueAverage" value="2">Average&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="ValueDissatisfied" value="1">Dissatisfied&nbsp;&nbsp;&nbsp;&nbsp;
+  <span id="ValueError"></span><br><br>
+  <label>Overall Experience:</label>
+  <input type="radio" id="OverallExperienceExcellent" value="4">Excellent&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="OverallExperienceGood" value="3">Good&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="OverallExperienceAverage" value="2">Average&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="radio" id="OverallExperienceDissatisfied" value="1">Dissatisfied&nbsp;&nbsp;&nbsp;&nbsp;
+  <span id="OverallExperienceError"></span><br><br>
+  <label>Comments:</label>
+  <textarea id="comments"></textarea>
+  <span id="CommentsError"></span><br><br>
+  <label>Name:</label>
+  <input type="text" id="name">
+  <span id="NameError"></span><br><br>
+  <label>Age:</label>
+  <select name="age">
+    <option value="<13">< 13</option>
+    <option value="13-17">13-17</option>
+    <option value="18-24">18-24</option>
+    <option value="25-34" selected>25-34</option>
+    <option value="35-44">35-44</option>
+    <option value="45-54">45-54</option>
+    <option value=">54">> 54</option>
+  </select>
+  <span id="AgeError"></span><br><br>
+  <label>Email:</label>
+  <input type="text" id="email">
+  <span id="EmailError"></span><br><br>
+  <input type="button" id="btnInsert" value="Insert" onclick="insertSurvey()">
+  <script>
+
+/* Validate DineIn / Takeout - one of the buttons has to be pushed */
+function validateDineInTakeOut() {
+    var value = "";
+    /* Check each radio button and see if one is checked */
+    if (document.getElementById("DineIn").checked) {
+      value = document.getElementById("DineIn").value;
+    }
+    if (document.getElementById("TakeOut").checked) {
+      value = document.getElementById("TakeOut").value;
+    }
+    /* If value is still blank then no radio button was pressed */
+    if (value.trim() == "" ) {
+            document.getElementById("DineInTakeOutError").innerHTML = "Required";
+            return false;
+    }
+    else
+    {
+        document.getElementById("DineInTakeOutError").innerHTML = "";
+        return true;
+    }
+}
+
+/* Insert Survey Button was clicked */
+function insertSurvey()
+{
+    /* Make sure that everything was valid */
+    if (validateDineInTakeOut()) {
+        
+        /* Everything is Valid - build AJAX call */
+        var myData = {};
+
+        myData.DateVisited = document.getElementById("DateVisited").value;
+
+        /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("DineIn").checked) {
+          myData.DineInTakeOut = document.getElementById("DineIn").value;
+        }
+        if (document.getElementById("TakeOut").checked) {
+          myData.DineInTakeOut = document.getElementById("TakeOut").value;
+        }
+        
+        /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("FoodQualityExcellent").checked) {
+          myData.FoodQuality = document.getElementById("FoodQualityExcellent").value;
+        }
+        if (document.getElementById("FoodQualityGood").checked) {
+          myData.FoodQuality = document.getElementById("FoodQualityGood").value;
+        }
+        if (document.getElementById("FoodQualityAverage").checked) {
+          myData.FoodQuality = document.getElementById("FoodQualityAverage").value;
+        }
+        if (document.getElementById("FoodQualityDissatisfied").checked) {
+          myData.FoodQuality = document.getElementById("FoodQualityDissatisfied").value;
+        }
+      
+      /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("ServiceQualityExcellent").checked) {
+          myData.ServiceQuality = document.getElementById("ServiceQualityExcellent").value;
+        }
+        if (document.getElementById("ServiceQualityGood").checked) {
+          myData.ServiceQuality = document.getElementById("ServiceQualityGood").value;
+        }
+        if (document.getElementById("ServiceQualityAverage").checked) {
+          myData.ServiceQuality = document.getElementById("ServiceQualityAverage").value;
+        }
+        if (document.getElementById("ServiceQualityDissatisfied").checked) {
+          myData.ServiceQuality = document.getElementById("ServiceQualityDissatisfied").value;
+        }
+        
+        /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("OrderAccuracyExcellent").checked) {
+          myData.OrderAccuracy = document.getElementById("OrderAccuracyyExcellent").value;
+        }
+        if (document.getElementById("OrderAccuracyGood").checked) {
+          myData.OrderAccuracy = document.getElementById("OrderAccuracyGood").value;
+        }
+        if (document.getElementById("OrderAccuracyAverage").checked) {
+          myData.OrderAccuracy = document.getElementById("OrderAccuracyAverage").value;
+        }
+        if (document.getElementById("OrderAccuracyDissatisfied").checked) {
+          myData.OrderAccuracy = document.getElementById("OrderAccuracyDissatisfied").value;
+        }
+        
+        /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("SpeedOfServiceExcellent").checked) {
+          myData.SpeedOfService = document.getElementById("SpeedOfServiceExcellent").value;
+        }
+        if (document.getElementById("SpeedOfServiceGood").checked) {
+          myData.SpeedOfService = document.getElementById("SpeedOfServiceGood").value;
+        }
+        if (document.getElementById("SpeedOfServiceAverage").checked) {
+          myData.SpeedOfService = document.getElementById("SpeedOfServiceAverage").value;
+        }
+        if (document.getElementById("SpeedOfServiceDissatisfied").checked) {
+          myData.SpeedOfService = document.getElementById("SpeedOfServiceDissatisfied").value;
+        }
+        
+        /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("ValueExcellent").checked) {
+          myData.Value = document.getElementById("ValueExcellent").value;
+        }
+        if (document.getElementById("ValueGood").checked) {
+          myData.Value = document.getElementById("ValueGood").value;
+        }
+        if (document.getElementById("ValueAverage").checked) {
+          myData.Value = document.getElementById("ValueAverage").value;
+        }
+        if (document.getElementById("ValueDissatisfied").checked) {
+          myData.Value = document.getElementById("ValueDissatisfied").value;
+        }
+        
+         /* If a radio button is checked, then save the value associated with the button */
+        if (document.getElementById("OverallExperienceExcellent").checked) {
+          myData.OverallExperience = document.getElementById("OverallExperienceExcellent").value;
+        }
+        if (document.getElementById("OverallExperienceGood").checked) {
+          myData.OverallExperience = document.getElementById("OverallExperienceGood").value;
+        }
+        if (document.getElementById("OverallExperienceAverage").checked) {
+          myData.OverallExperience = document.getElementById("OverallExperienceAverage").value;
+        }
+        if (document.getElementById("OverallExperienceDissatisfied").checked) {
+          myData.OverallExperience = document.getElementById("OverallExperienceDissatisfied").value;
+        }
+        
+        
+
+
+
+        var myURL = "https://itecsapphire-ishopkins.c9users.io/Survey/restapi.php/Survey/";
+        var myMethod = "POST";
+
+        $.ajax({
+          method: myMethod,
+          url: myURL,
+          data: myData
+        })
+        .done(function( msg ) {
+            alert( "Message: " + msg );
+        });
+    }
+}  
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+</body>
+</html>
